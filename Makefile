@@ -6,16 +6,15 @@ CC_FLAGS = -Wall -Wextra -Werror -fsanitize=address -g3
 PATH_OBJ = ./Objs/
 PATH_SRC = ./Srcs/
 PATH_INC = ./Includes/
-INC = $(addprefix $(PATH_INC), push_swap.h)
 
 #******************************************************************************#
-#                                    ALGO                                      #
+#                                  Includes                                    #
 #******************************************************************************#
 
-ALGO_FOLDER = algo/
-FILES_ALGO = main parse sort_stack radix
-SRCS_ALGO = $(addprefix $(PATH_SRC)$(ALGO_FOLDER), $(addsuffix .c , $(FILES_ALGO)))
-OBJS_ALGO = $(addprefix $(PATH_OBJ)$(ALGO_FOLDER), $(addsuffix .o , $(FILES_ALGO)))
+LIBFT = $(addprefix $(PATH_INC)Libft)
+FILES_INC = so_long
+INCS = $(addprefix $(PATH_INC)$(FILES_INC), $(addsuffix .h , $(FILES_INC)))
+
 
 #******************************************************************************#
 #                                   MOVES                                      #
