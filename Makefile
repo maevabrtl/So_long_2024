@@ -12,6 +12,7 @@ PATH_INC = ./Includes/
 #******************************************************************************#
 
 LIBFT = $(addprefix $(PATH_INC)Libft)
+
 FILES_INC = so_long
 INCS = $(addprefix $(PATH_INC)$(FILES_INC), $(addsuffix .h , $(FILES_INC)))
 
