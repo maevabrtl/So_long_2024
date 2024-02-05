@@ -1,5 +1,7 @@
 .PHONY: all clean fclean re libft me a sandwich
 
+include Includes/Libft/text_mod.mk
+
 NAME := so_long
 CC := cc
 MANDATORY_FLAGS := -Wall -Wextra -Werror
@@ -7,6 +9,7 @@ DEPS_FLAGS := -MMD -MP
 MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
 CC_FLAGS := -fsanitize=address -g3
 ALL_FLAGS = $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(MLX_MACOS_FLAGS)
+PRINT := echo
 #to modify later to make something that works both on my mac and at school pc's
 
 #******************************************************************************#
@@ -23,16 +26,15 @@ INCS = $(addprefix $(PATH_INC), $(FILES_INC))
 #******************************************************************************#
 
 PATH_SRCS = ./Srcs/
-FILES_SRCS =
-SRCS =
+FILES_SRCS = main.c
+
 
 #******************************************************************************#
 #                                    OBJS                                      #
 #******************************************************************************#
 
 PATH_OBJS = ./Objs/
-FILES_OBJS =
-OBJS =
+FILES_OBJS = main.o
 
 #******************************************************************************#
 #                                    ALL                                       #
@@ -43,16 +45,9 @@ OBJS =
 #                                   RULES                                     #
 #*****************************************************************************#
 
-# <The thing you want to make>: <the stuff you need to make it>
-#     <The steps to make it>
-me:
-	@true
-a:
-	@true
-sandwich:
-	@if [ `id -u` != 0 ]; then echo "What? Make it yourself."; else echo "Ok..."; fi
-
-all: $(NAME) libft
+all: # $(NAME) libft
+	@$(PRINT) "\n$(TEXT_MOD_1)Executable$(RESET) $(TEXT_MOD_2)\
+	so_long$(RESET) $(TEXT_MOD_1)successfully created !$(RESET)\n"
 
 libft:
 	@make -C $(LIBFT)
@@ -67,19 +62,31 @@ fclean: clean
 
 re: fclean all
 
-# test: all
-
-# bonus:
-
 #*****************************************************************************#
 #                                Compilation                                  #
 #*****************************************************************************#
 
 $(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) $(LIBFT)
-	@$(CC) $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(MLX_MACOS_FLAGS) -I $(PATH_INC) -c $< -o $@
+	@$(CC) $(ALL_FLAGS) -I $(PATH_INC) -c $< -o $@
 
 $(NAME): $(PATH_OBJS) $(OBJS)
-	@$(CC) $(CC_FLAGS) $(OBJS) -o $@
+	@$(CC) $(ALL_FLAGS) $(OBJS) -o $@
 
 $(PATH_OBJS):
 	@mkdir -p $@
+
+#*****************************************************************************#
+#                                Funny part                                   #
+#*****************************************************************************#
+
+TEXT_MOD_1 = $(ADD_TEXT_MOD)$(BOLD)$(FONT)$(CYAN)$(END_MOD)
+TEXT_MOD_2 = $(ADD_TEXT_MOD)$(BOLD)$(INVERT)$(FONT)$(GREEN)$(END_MOD)
+
+# <The thing you want to make>: <the stuff you need to make it>
+#     <The steps to make it>
+me:
+	@true
+a:
+	@true
+sandwich:
+	@if [ `id -u` != 0 ]; then echo "What? Make it yourself."; else echo "Ok..."; fi
