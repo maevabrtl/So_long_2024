@@ -4,7 +4,6 @@
 	# define FALSE=0
 
 # include "mlx.h"
-# include "libft.h"
 # include <stdio.h>
 
 #endif

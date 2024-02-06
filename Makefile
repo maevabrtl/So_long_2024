@@ -8,7 +8,7 @@ MANDATORY_FLAGS := -Wall -Wextra -Werror
 DEPS_FLAGS := -MMD -MP
 MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
 CC_FLAGS := -fsanitize=address -g3
-ALL_FLAGS = $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(MLX_MACOS_FLAGS)
+ALL_FLAGS = $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS)
 PRINT := echo
 #to modify later to make something that works both on my mac and at school pc's
 
@@ -45,7 +45,7 @@ FILES_OBJS = main.o
 #                                   RULES                                     #
 #*****************************************************************************#
 
-all: # $(NAME) libft
+all: $(NAME) libft
 	@$(PRINT) "\n$(TEXT_MOD_1)Executable$(RESET) $(TEXT_MOD_2)\
 	so_long$(RESET) $(TEXT_MOD_1)successfully created !$(RESET)\n"
 
