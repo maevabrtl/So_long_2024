@@ -67,7 +67,10 @@ re: fclean all
 #*****************************************************************************#
 
 $(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) $(LIBFT)
-	@$(CC) $(ALL_FLAGS) -I $(PATH_INC) -c $< -o $@
+	@printf %b "  $(TEXT_MOD_3)Compiling$(RESET) $(TEXT_MOD_4)$<...$(RESET)"
+	@$(CC) $(ALL_FLAGS) -I $(PATH_INC) -o $@ -c $<
+	@printf "\r"
+	@printf "                                                                                     \r"
 
 $(NAME): $(PATH_OBJS) $(OBJS)
 	@$(CC) $(ALL_FLAGS) $(OBJS) -o $@
@@ -80,7 +83,9 @@ $(PATH_OBJS):
 #*****************************************************************************#
 
 TEXT_MOD_1 = $(ADD_TEXT_MOD)$(BOLD)$(FONT)$(CYAN)$(END_MOD)
-TEXT_MOD_2 = $(ADD_TEXT_MOD)$(BOLD)$(INVERT)$(FONT)$(GREEN)$(END_MOD)
+TEXT_MOD_2 = $(ADD_TEXT_MOD)$(BOLD)$(ITALIC)$(FONT)$(GREEN)$(END_MOD)
+TEXT_MOD_3 = $(ADD_TEXT_MOD)$(FONT)$(CYAN)$(END_MOD)
+TEXT_MOD_4 = $(ADD_TEXT_MOD)$(BOLD)$(FADE)$(ITALIC)$(FONT)$(BLUE)$(END_MOD)
 
 # <The thing you want to make>: <the stuff you need to make it>
 #     <The steps to make it>

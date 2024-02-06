@@ -13,7 +13,7 @@ EFFECT_UNDO := 2
 # Those are the effects (blink seemingly doesn't work, at least on my computer)
 NORMAL := 0;
 BOLD := 1;
-DIM := 2;
+FADE := 2;
 ITALIC := 3;
 UNDERLINE := 4;
 BLINK := 5;
