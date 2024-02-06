@@ -1,3 +1,6 @@
 [submodule "Includes/Libft"]
 	path = Includes/Libft
 	url = git@github.com:maevabrtl/Libft_2022.git
+[submodule "mlx_linux_sub"]
+	path = mlx_linux_sub
+	url = git@github.com:42Paris/minilibx-linux.git
