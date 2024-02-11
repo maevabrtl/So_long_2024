@@ -1,0 +1,16 @@
+-> check les size de map.height et map.width car pas clair
+-> quand je dois set le y a null et le x a \0
+
+tools :
+	- exit_error
+
+
+for later :
+-> remettre git modules dans ./
+-> finir makefile avec condition
+
+
+idées ?
+
+le player doit passer de planete en planete avant de trouver le 42 et/ou la terre ?
+et fuir les vogons ?
