@@ -1,0 +1,43 @@
+
+
+	// void	*mlx_ptr;
+	// mlx_ptr = mlx_init();
+
+// ./so_long "Ressources/Maps/classic.ber"
+// ./so_long "Ressources/Maps/empty.ber"
+// ./so_long "Ressources/Maps/intra.ber"
+// ./so_long "Ressources/Maps/intra2.ber"
+// ./so_long "Ressources/Maps/invalidOdject.ber"
+// ./so_long "Ressources/Maps/map.ber"
+// ./so_long "Ressources/Maps/map1.ber"
+// ./so_long "Ressources/Maps/mental.ber"
+// ./so_long "Ressources/Maps/mini.ber"
+// ./so_long "Ressources/Maps/notclosed.ber"
+// ./so_long "Ressources/Maps/notcollectible.ber"
+// ./so_long "Ressources/Maps/notoneexit.ber"
+// ./so_long "Ressources/Maps/notoneplayer.ber"
+// ./so_long "Ressources/Maps/notrectangular.ber"
+// ./so_long "Ressources/Maps/notwinnable.ber"
+// ./so_long "Ressources/Maps/notwinnableexit.ber"
+// ./so_long "Ressources/Maps/twoexits.ber"
+// ./so_long "Ressources/Maps/twoplayers.ber"
+
+
+
+
+
+
+
+
+
+
+
+idées ?
+
+shrek doit ramasser ses enfants avant de rentrer chez lui ?
+
+le player doit passer de planete en planete avant de trouver le 42 et/ou la terre ?
+et fuir les vogons ?
+
+le learner-player doit ramasser les 100% en evitant les crashs
+pour arriver au gra(al)de-member ?
