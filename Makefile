@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re os libs me a sandwich
+.PHONY: all clean fclean re os libs me a sandwich tests
 
 include Includes/Libft/text_mod.mk
 
@@ -15,47 +15,76 @@ CC := cc
 MANDATORY_FLAGS := -Wall -Wextra -Werror
 DEPS_FLAGS := -MMD -MP
 CC_FLAGS := -fsanitize=address -g3
-MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
-MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz mlx_linux/libmlx_Linux.a mlx_linux/libmlx.a
-CHECK_COMP = 0
+# MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
+# MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz mlx_linux/libmlx_Linux.a mlx_linux/libmlx.a
 
 #******************************************************************************#
 #                                OS Checking                                   #
 #******************************************************************************#
 
-OS = $(shell uname)
-ifeq ($(OS), Linux)
-	ALL_FLAGS := $(MANDATORY_FLAGS) $(DEPS_FLAGS)
-	OS_MLX := $(MLX_LINUX_FLAGS)
-	MLX_DIR := ./mlx_linux/
-else
-	ALL_FLAGS := $(MANDATORY_FLAGS) $(DEPS_FLAGS) $(CC_FLAGS)
-	OS_MLX := $(MLX_MACOS_FLAGS)
-endif
+# OS = $(shell uname)
+# ifeq ($(OS), Linux)
+# 	ALL_FLAGS := $(MANDATORY_FLAGS) $(DEPS_FLAGS)
+# 	OS_MLX := $(MLX_LINUX_FLAGS)
+# 	MLX_DIR := ./mlx_linux/
+# else
+# 	ALL_FLAGS := $(MANDATORY_FLAGS) $(CC_FLAGS)
+# 	OS_MLX := $(MLX_MACOS_FLAGS)
+# endif
+
+#******************************************************************************#
+#                                   Paths                                      #
+#******************************************************************************#
+
+PATH_INC = ./Includes/
+PATH_SRCS = ./Srcs/
+PATH_OBJS = ./.Objs/
+PATH_PARSE = $(addprefix $(PATH_SRCS), Parse/)
+PATH_PARSE_OBJS = $(addprefix $(PATH_OBJS), Parse/)
+PATH_ERROR = $(addprefix $(PATH_SRCS), Error/)
+PATH_ERROR_OBJS = $(addprefix $(PATH_OBJS), Error/)
 
 #******************************************************************************#
 #                                  Includes                                    #
 #******************************************************************************#
 
-PATH_INC = ./Includes/
 FILES_INC = so_long.h
-LIBFT = $(addprefix $(PATH_INC), Libft)
 INCS = $(addprefix $(PATH_INC), $(FILES_INC))
+PATH_LIBFT = $(addprefix $(PATH_INC), Libft/)
+LIBFT = $(addprefix $(PATH_LIBFT), libft.a)
 
 #******************************************************************************#
-#                                  Sources                                     #
+#                                    Main                                      #
 #******************************************************************************#
 
-PATH_SRCS = ./Srcs/
-FILES_SRCS = main
-SRCS := $(addprefix $(PATH_SRCS), $(addsuffix .c , $(FILES_SRCS)))
+FILE_MAIN = main
+MAIN_SRC = $(addprefix $(PATH_SRCS), $(addsuffix .c , $(FILE_MAIN)))
+MAIN_OBJ = $(addprefix $(PATH_OBJS), $(addsuffix .o , $(FILE_MAIN)))
 
 #******************************************************************************#
-#                                  Objects                                     #
+#                                   Parsing                                    #
 #******************************************************************************#
 
-PATH_OBJS = ./.Objs/
-OBJS = $(addprefix $(PATH_OBJS), $(addsuffix .o , $(FILES_SRCS)))
+FILES_PARSE = is_valid_map is_winnable parse_map
+PARSE_SRCS = $(addprefix $(PATH_PARSE), $(addsuffix .c , $(FILES_PARSE)))
+PARSE_OBJS = $(addprefix $(PATH_PARSE_OBJS), $(addsuffix .o , $(FILES_PARSE)))
+
+#******************************************************************************#
+#                                   Parsing                                    #
+#******************************************************************************#
+
+FILES_ERROR = clean_and_exit clean_tools exit_error
+ERROR_SRCS = $(addprefix $(PATH_ERROR), $(addsuffix .c , $(FILES_ERROR)))
+ERROR_OBJS = $(addprefix $(PATH_ERROR_OBJS), $(addsuffix .o , $(FILES_ERROR)))
+
+#******************************************************************************#
+#                              Sources + Objects                               #
+#******************************************************************************#
+
+ALL_OBJS_PATH = $(PATH_OBJS) $(PATH_PARSE_OBJS) $(PATH_ERROR_OBJS)
+OBJS = $(MAIN_OBJ) $(PARSE_OBJS) $(ERROR_OBJS)
+ALL_SRCS_PATH = $(PATH_SRCS) $(PATH_PARSE) $(PATH_ERROR)
+SRCS = $(MAIN_SRC) $(PARSE_SRCS) $(ERROR_SRCS)
 
 #******************************************************************************#
 #                              Text modification                               #
@@ -78,21 +107,6 @@ TEXT_MOD_6 = $(ADD_TEXT_MOD)$(ITALIC)$(FONT)$(GREEN)$(END_MOD)
 
 all: build
 
-# check_exist:
-# 	@./ .make_tools.sh
-# 	if [ "diff .check_comp .find" == "0" ]; then \
-# 		make --no-print-directory check_for_new && echo "yolo"; \
-# 	else \
-# 		echo "yolo esle"; \
-# 	fi
-
-# check_for_new:
-# 	if [ "$$(find $(SRCS) -newer "$(NAME)" -print -quit)" ]; then \
-# 		make --no-print-directory build; \
-# 	else \
-# 		echo "Everything is up to date !"; \
-# 	fi
-
 build: os libs begin_compil $(NAME) end_compil
 
 re: re_mess fclean all
@@ -103,23 +117,23 @@ re: re_mess fclean all
 
 libs:
 	@echo "> $(TEXT_MOD_5)Making libs$(RESET)"
-	@make --no-print-directory -C $(LIBFT)
-ifdef MLX_DIR
-	@make -s --no-print-directory -C $(MLX_DIR)
-endif
+	@make --no-print-directory -C $(PATH_LIBFT)
 	@echo "$(TEXT_MOD_1)Libraries ready for use ! 🚀 $(RESET)\n"
+# ifdef MLX_DIR
+# 	@make -s --no-print-directory -C $(MLX_DIR)
+# endif
 
 #*****************************************************************************#
 #                               Cleaning rules                                #
 #*****************************************************************************#
 
 clean:
-	@make --no-print-directory clean -C $(LIBFT)
+	@make --no-print-directory clean -C $(PATH_LIBFT)
 	@rm -rf $(PATH_OBJS)
 	@echo "> $(TEXT_MOD_5)Objects files deleted.$(RESET)"
 
 fclean: clean
-	@make --no-print-directory fclean -C $(LIBFT)
+	@make --no-print-directory fclean -C $(PATH_LIBFT)
 	@rm -f $(NAME)
 	@echo "> $(TEXT_MOD_5)Executable$(RESET) $(TEXT_MOD_6)so_long\
 	$(RESET) $(TEXT_MOD_5)deleted.$(RESET)"
@@ -130,8 +144,8 @@ fclean: clean
 
 os:
 	@echo "\n$(TEXT_MOD_1)LET'S BUILD !$(RESET)"
-	@echo "\n> $(TEXT_MOD_5)Checking the OS...$(RESET)"
-	@echo "> $(TEXT_MOD_5)OS is $(OS) !$(RESET)"
+#	@echo "\n> $(TEXT_MOD_5)Checking the OS...$(RESET)"
+#	@echo "> $(TEXT_MOD_5)OS is $(OS) !$(RESET)"
 
 #*****************************************************************************#
 #                               Messages rules                                #
@@ -151,18 +165,21 @@ end_compil:
 #                             Compilation rules                               #
 #*****************************************************************************#
 
+
+$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT)
+	@$(CC) $(CC_FLAGS) $(LIBFT) $(OBJS) -o $@
+	@echo "> $(TEXT_MOD_5)Compilation succeeded !$(RESET)"
+
+$(ALL_OBJS_PATH):
+	@mkdir $@
+
 $(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) $(LIBFT)
 	@printf %b "  $(TEXT_MOD_3)Compiling$(RESET) $(TEXT_MOD_4)$<...$(RESET)"
-	@$(CC) -c  $(ALL_FLAGS) $< -I$(PATH_INC) -o $@
+	@$(CC) $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(MLX_MACOS_FLAGS) -I $(PATH_INC) -o $@ -c $<
 	@printf "\r"
 	@printf "                                                                                     \r"
 
-$(NAME): $(PATH_OBJS) $(OBJS)
-	@$(CC) $(OBJS) $(ALL_FLAGS) $(OS_MLX) -o $@
-	@echo "> $(TEXT_MOD_5)Compilation succeeded !$(RESET)"
-
-$(PATH_OBJS):
-	@mkdir -p $@
+-include $(OBJS:.o=.d)
 
 #*****************************************************************************#
 #                                Funny part                                   #
