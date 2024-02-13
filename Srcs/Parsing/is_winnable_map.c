@@ -4,7 +4,6 @@ size_t	is_winnable(t_map map);
 size_t	find_valid_path(char **map, size_t y, size_t x, t_check *checker);
 char	**dup_map(t_map map);
 char	**free_map_copy(char **map, ssize_t nb_strs_to_free);
-size_t	ft_strlen(const char *s);
 
 size_t	is_winnable(t_map map)
 {
