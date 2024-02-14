@@ -11,11 +11,12 @@ include Includes/Libft/text_mod.mk
 #******************************************************************************#
 
 NAME := so_long
-MLX_A := usr/X11/libmlx_Darwin.a
+# MLX_A := ./mlx/libmlx_Darwin.a
 CC := cc
-MANDATORY_FLAGS := -Wall -Wextra -Werror # -WGAME ?????????
+MANDATORY_FLAGS := -Wall -Wextra # -Werror # -WGAME ?????????
 DEPS_FLAGS := -MMD -MP
 CC_FLAGS := -fsanitize=address -g3
+# MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
 MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
 MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz mlx_linux/libmlx_Linux.a mlx_linux/libmlx.a
 
@@ -165,7 +166,7 @@ end_compil:
 #*****************************************************************************#
 
 
-$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT) $(MLX_A)
+$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT)# $(MLX_A)
 	@$(CC) $(CC_FLAGS) $(LIBFT) $(OBJS) -o $@
 	@echo "> $(TEXT_MOD_5)Compilation succeeded !$(RESET)"
 

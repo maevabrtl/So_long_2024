@@ -4,6 +4,7 @@
 # include "macros.h"
 # include "structs.h"
 # include "messages.h"
+# include <../mlx/mlx.h>
 # include "Libft/Includes/libft.h"
 # include "Libft/Includes/get_next_line.h"
 # include <stdio.h>
@@ -33,7 +34,7 @@ t_graphics	set_to_null(t_graphics imgs);
 
 void		launch_game(t_so_long *game);
 int			keypressed_move(int key, t_so_long *game);
-static int	update_and_check_case(t_so_long *game, int x, int y);
+// static int	update_and_check_case(t_so_long *game, int x, int y);
 int			exit_game(char *message, t_so_long *game);
 int			print_nb_moves(int nb_moves);
 
