@@ -1,12 +1,12 @@
 #include "../../Includes/so_long.h"
 
-int		clean_and_exit(char *message, char *vars_to_free_list, t_so_long *struct_var, ...);
-int		free_str_var(va_list to_clean, char alloc_ptr, int index);
+int		clean_and_exit(char *message, t_so_long *struct_var, char *vars_to_free_list, ...);
+int		free_str_var(char **to_free, char alloc_ptr, int index);
 void	free_images(t_so_long *game);
 int		free_mlx_var(t_mlx to_clean, char display_or_both, int index);
 void	free_struct(t_so_long *to_free);
 
-int	clean_and_exit(char *message, char *vars_to_free_list, t_so_long *struct_var, ...)
+int	clean_and_exit(char *message, t_so_long *struct_var, char *vars_to_free_list, ...)
 {
 	va_list	to_clean;
 	int		index;
@@ -16,7 +16,7 @@ int	clean_and_exit(char *message, char *vars_to_free_list, t_so_long *struct_var
 	while (vars_to_free_list && vars_to_free_list[++index])
 	{
 		if (vars_to_free_list[index] == 'I')
-			free_images(game);
+			free_images(struct_var);
 		if (vars_to_free_list[index] == 'M')
 			index = free_mlx_var(struct_var->mlx, vars_to_free_list[index + 1], index);
 		if (vars_to_free_list[index] == 'S')
@@ -28,17 +28,15 @@ int	clean_and_exit(char *message, char *vars_to_free_list, t_so_long *struct_var
 	}
 	va_end(to_clean);
 	if (struct_var->win_or_not == FALSE)
-		return (ft_putstr_fd(message, 2), exit(EXIT_FAILURE));
-	return (ft_putstr_fd(message, 1), exit(EXIT_SUCCESS));
+		return (ft_putstr_fd(message, 2), exit(EXIT_FAILURE), 0);
+	return (ft_putstr_fd(message, 1), exit(EXIT_SUCCESS), 0);
 }
 
-int	free_str_var(va_list to_clean, char alloc_ptr, int index)
+int	free_str_var(char **to_free, char alloc_ptr, int index)
 {
 	int		i;
-	char	**to_free;
 
 	i = 0;
-	to_free = va_arg(to_clean, char **);
 	if (to_free != NULL)
 	{
 		while (to_free[i] != NULL)
@@ -60,16 +58,16 @@ int	free_str_var(va_list to_clean, char alloc_ptr, int index)
 
 void	free_images(t_so_long *game)
 {
-	if (game->imgs.wall != NULL)
-		mlx_destroy_image(game->mlx.connection, game->imgs.wall);
-	if (game->imgs.floor != NULL)
-		mlx_destroy_image(game->mlx.connection, game->imgs.floor);
-	if (game->imgs.collectible != NULL)
-		mlx_destroy_image(game->mlx.connection, game->imgs.collectible);
-	if (game->imgs.exit != NULL)
-		mlx_destroy_image(game->mlx.connection, game->imgs.exit);
-	if (game->imgs.player != NULL)
-		mlx_destroy_image(game->mlx.connection, game->imgs.player);
+	if (game->img.wall != NULL)
+		mlx_destroy_image(game->mlx.connection, game->img.wall);
+	if (game->img.floor != NULL)
+		mlx_destroy_image(game->mlx.connection, game->img.floor);
+	if (game->img.collect != NULL)
+		mlx_destroy_image(game->mlx.connection, game->img.collect);
+	if (game->img.exit != NULL)
+		mlx_destroy_image(game->mlx.connection, game->img.exit);
+	if (game->img.player != NULL)
+		mlx_destroy_image(game->mlx.connection, game->img.player);
 }
 
 int	free_mlx_var(t_mlx to_clean, char display_or_both, int index)

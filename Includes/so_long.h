@@ -3,10 +3,9 @@
 
 # include "macros.h"
 # include "structs.h"
-# include "error.h"
+# include "messages.h"
 # include "Libft/Includes/libft.h"
 # include "Libft/Includes/get_next_line.h"
-# include "mlx.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
@@ -16,26 +15,27 @@
 
 /* In Srcs/Game/clean_and_exit.c */
 
-int			clean_and_exit(char *message, char *vars_to_free_list, t_so_long *struct_var, ...);
-int			free_str_var(va_list to_clean, char alloc_ptr, int index);
+int			clean_and_exit(char *message, t_so_long *struct_var, char *vars_to_free_list, ...);
+int			free_str_var(char **to_free, char alloc_ptr, int index);
 void		free_images(t_so_long *game);
 int			free_mlx_var(t_mlx to_clean, char display_or_both, int index);
 void		free_struct(t_so_long *to_free);
 
 /* In Srcs/Game/graphics.c */
 
-int			apply_graphics(game);
+int			apply_graphics(t_so_long *game);
 void		draw_map(t_so_long *game, t_position pos);
-void		put_player(t_so_long *game);
+int			put_player(t_so_long *game);
 t_graphics	get_and_convert_images(t_so_long *game);
-t_graphics	set_to_null(imgs);
+t_graphics	set_to_null(t_graphics imgs);
 
 /* In Srcs/Game/handler.c */
 
 void		launch_game(t_so_long *game);
 int			keypressed_move(int key, t_so_long *game);
 static int	update_and_check_case(t_so_long *game, int x, int y);
-int			exit_game(char *message);
+int			exit_game(char *message, t_so_long *game);
+int			print_nb_moves(int nb_moves);
 
 /* In Srcs/Parsing/is_valid_map.c */
 

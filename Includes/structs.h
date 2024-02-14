@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 # define STRUCTS_H
 
+# include <stdlib.h>
+
 typedef struct		s_check
 {
 	size_t				nb_collect;

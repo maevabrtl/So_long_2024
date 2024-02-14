@@ -27,7 +27,7 @@ t_map	parse_map(char *map_path)
 	close(fd);
 	is_closed_and_rectangular(map);
 	if (is_winnable(map) == FALSE)
-		clean_and_exit(NOT_WINNABLE, "C2", NULL, map.map);
+		clean_and_exit(NOT_WINNABLE, NULL, "C2", map.map);
 	return (map);
 }
 
@@ -50,22 +50,22 @@ t_map	fill_map(int fd, t_map map)
 	line = get_next_line(fd);
 	map.map = malloc(sizeof(char *) * (map.height + 1));
 	if (map.map == NULL || line == NULL)
-		clean_and_exit(ALLOC_BOUM, "C1C2F", NULL, &line, map.map, fd);
+		clean_and_exit(ALLOC_BOUM, NULL, "C1C2F", &line, map.map, fd);
 	y = -1;
 	while (++y < map.height)
 	{
 		map.map[y] = malloc(sizeof(char) * map.width + 1);
 		if (map.map[y] == NULL)
-			clean_and_exit(ALLOC_BOUM, "C2FC1", NULL, map.map, fd, &line);
+			clean_and_exit(ALLOC_BOUM, NULL, "C2FC1", map.map, fd, &line);
 		copy_line(&map, line, y, fd);
 		free(line);
 		line = get_next_line(fd);
 		if (line == NULL && y < map.height - 1)
-			clean_and_exit(ALLOC_BOUM, "C2F", NULL, map.map, fd);
+			clean_and_exit(ALLOC_BOUM, NULL, "C2F", map.map, fd);
 	}
 	map.map[y] = NULL;
 	if (map.nb_collect == 0)
-		clean_and_exit(NO_COLL, "C1C2F", NULL, &line, map.map, fd);
+		clean_and_exit(NO_COLL, NULL, "C1C2F", &line, map.map, fd);
 	return (free(line), map);
 }
 
@@ -79,9 +79,9 @@ size_t	copy_line(t_map *map, char *line, size_t y, int fd)
 	{
 		checker = store_and_check_elems_data(map, line[x], x, y);
 		if (checker == 2)
-			clean_and_exit(TOO_MANY_P, "C2C1F", NULL, (*map).map, &line, fd);
+			clean_and_exit(TOO_MANY_P, NULL, "C2C1F", (*map).map, &line, fd);
 		if (checker == 3)
-			clean_and_exit(TOO_MANY_E, "C2C1F", NULL, (*map).map, &line, fd);
+			clean_and_exit(TOO_MANY_E, NULL, "C2C1F", (*map).map, &line, fd);
 		map->map[y][x] = line[x];
 		x++;
 	}

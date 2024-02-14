@@ -11,8 +11,9 @@ include Includes/Libft/text_mod.mk
 #******************************************************************************#
 
 NAME := so_long
+MLX_A := usr/X11/libmlx_Darwin.a
 CC := cc
-MANDATORY_FLAGS := -Wall -Wextra -WGAME
+MANDATORY_FLAGS := -Wall -Wextra -Werror # -WGAME ?????????
 DEPS_FLAGS := -MMD -MP
 CC_FLAGS := -fsanitize=address -g3
 MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
@@ -164,7 +165,7 @@ end_compil:
 #*****************************************************************************#
 
 
-$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT)
+$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT) $(MLX_A)
 	@$(CC) $(CC_FLAGS) $(LIBFT) $(OBJS) -o $@
 	@echo "> $(TEXT_MOD_5)Compilation succeeded !$(RESET)"
 
@@ -173,7 +174,7 @@ $(ALL_OBJS_PATH):
 
 $(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) $(LIBFT)
 	@printf %b "  $(TEXT_MOD_3)Compiling$(RESET) $(TEXT_MOD_4)$<...$(RESET)"
-	@$(CC) $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(MLX_MACOS_FLAGS) -I $(PATH_INC) -o $@ -c $<
+	@$(CC) $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) -I $(PATH_INC) -o $@ -c $<
 	@printf "\r"
 	@printf "                                                                                     \r"
 

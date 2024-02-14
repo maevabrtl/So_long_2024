@@ -4,7 +4,7 @@
 # define TRUE 1
 # define FALSE 0
 
-# define WINDOW_CLOSED 17
+# define CLOSING_WINDOW 17
 # define NO_MASK 0
 
 # define W_KEY 119

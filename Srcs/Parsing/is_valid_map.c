@@ -14,15 +14,15 @@ t_map	content_is_valid(int fd, t_map map)
 	index = 0;
 	line = get_next_line(fd);
 	if (!line)
-		clean_and_exit(EMPTY_MAP, "C1C2F", NULL, &line, map.map, fd);
+		clean_and_exit(EMPTY_MAP, NULL, "C1C2F", &line, map.map, fd);
 	map.width = ft_strlen(line) - 1;
 	if (map.width <= 2)
-		clean_and_exit(INVALID_ELEM, "C1C2F", NULL, &line, map.map, fd);
+		clean_and_exit(INVALID_ELEM, NULL, "C1C2F", &line, map.map, fd);
 	map.height = 0;
 	while (line[index] == WALL)
 		index++;
 	if (index != map.width)
-		clean_and_exit(NOT_RECT, "C1C2F", NULL, &line, map.map, fd);
+		clean_and_exit(NOT_RECT, NULL, "C1C2F", &line, map.map, fd);
 	while (line)
 	{
 		map.height++;
@@ -44,9 +44,9 @@ char	*check_line(int fd, t_map *map)
 	while (is_valid_element(line[index]) == TRUE)
 		index++;
 	if (index < map->width && is_valid_element(line[index]) == FALSE)
-		clean_and_exit(INVALID_ELEM, "C1C2F", NULL, &line, map->map, fd);
+		clean_and_exit(INVALID_ELEM, NULL, "C1C2F", &line, map->map, fd);
 	else if (index != map->width || (index == map->width && line[index] != '\n'))
-		clean_and_exit(NOT_RECT, "C1C2F", NULL, &line, map->map, fd);
+		clean_and_exit(NOT_RECT, NULL, "C1C2F", &line, map->map, fd);
 	return (line);
 }
 
@@ -76,16 +76,16 @@ size_t	is_closed_and_rectangular(t_map map)
 	size_t	y;
 
 	if (map.height == map.width)
-		clean_and_exit(NOT_RECT, "C2", NULL, map.map);
+		clean_and_exit(NOT_RECT, NULL, "C2", map.map);
 	y = -1;
 	while (++y < map.height)
 		if (map.map[y][map.width - 1] != WALL
 			|| map.map[y][0] != WALL)
-			clean_and_exit(NOT_CLOSED, "C2", NULL, map.map);
+			clean_and_exit(NOT_CLOSED, NULL, "C2", map.map);
 	y--;
 	x = -1;
 	while (++x < map.width - 1)
 		if (map.map[y][x] != WALL)
-			clean_and_exit(NOT_CLOSED, "C2", NULL, map.map);
+			clean_and_exit(NOT_CLOSED, NULL, "C2", map.map);
 	return (TRUE);
 }
