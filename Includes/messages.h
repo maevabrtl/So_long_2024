@@ -1,5 +1,17 @@
-#ifndef ERROR_H
-# define ERROR_H
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   messages.h                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 14:57:00 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 14:57:43 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef MESSAGES_H
+# define MESSAGES_H
 
 # define WIN "\
 \n\
@@ -26,7 +38,6 @@ Please check the path you provided.\n"
 Memory allocation failed. \
 You've hacked the Matrice. Congrats.\n"
 
-
 /* MLX */
 
 # define DISPLAY_INIT_FAIL "\
@@ -41,7 +52,6 @@ MLX failed to launch graphical window.\n"
 
 # define WINDOW_CLOSED "\
 Game window has been closed. So long !\n"
-
 
 /* MAP */
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   macros.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 14:58:36 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:02:24 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MACROS_H
 # define MACROS_H
 
@@ -19,11 +31,6 @@
 # define COLLECT 'C'
 # define EXIT 'E'
 # define CHECKED 'X'
-
-# define MOVE_RIGHT(x) ((x) + 1)
-# define MOVE_LEFT(x) ((x) - 1)
-# define MOVE_UP(y) ((y) - 1)
-# define MOVE_DOWN(y) ((y) + 1)
 
 # define FLOOR_XPM "Ressources/XPM_imgs/floor.xpm"
 # define WALL_XPM "Ressources/XPM_imgs/wall.xpm"

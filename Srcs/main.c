@@ -1,21 +1,30 @@
-#include "../Includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:58:16 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:58:39 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-int			main(int ac, char **av);
-void		print_map(t_map map);
-t_so_long	*init_struct_game(t_so_long *game, t_map *map);
+#include "../Includes/so_long.h"
 
 int	main(int ac, char **av)
 {
 	t_so_long	*game;
 	t_map		*map;
+	t_graphics	*xpm;
 
-	// ft_putstr_fd("\033[0;33mSTART\n\033[0m", 2);
 	if (ac != 2)
 		clean_and_exit(WRONG_ARGS, NULL, NULL, NULL);
 	map = parse_map(av[1]);
 	game = NULL;
 	game = init_struct_game(game, map);
-	get_and_convert_images(game);
+	xpm = NULL;
+	get_and_convert_images(game, xpm);
 	print_map(*(game->map));
 	launch_game(game);
 	return (0);
@@ -34,6 +43,19 @@ int	check_size(void	*connection, t_map *map)
 	return (TRUE);
 }
 
+t_graphics	*set_to_null(t_graphics *img)
+{
+	img = malloc(sizeof(t_graphics));
+	if (!img)
+		return (NULL);
+	img->wall = NULL;
+	img->floor = NULL;
+	img->collect = NULL;
+	img->exit = NULL;
+	img->player = NULL;
+	return (img);
+}
+
 t_so_long	*init_struct_game(t_so_long *game, t_map *map)
 {
 	game = malloc(sizeof(t_so_long));
@@ -49,6 +71,7 @@ t_so_long	*init_struct_game(t_so_long *game, t_map *map)
 	game->mlx_clean = 1;
 	game->mlx_window = NULL;
 	game->img = NULL;
+	game->img = set_to_null(game->img);
 	if (check_size(game->mlx_connection, game->map) == FALSE)
 		clean_and_exit(MAP_OVERSIZE, game, NULL, NULL);
 	return (game);
@@ -56,8 +79,8 @@ t_so_long	*init_struct_game(t_so_long *game, t_map *map)
 
 void	print_map(t_map map)
 {
-	size_t x;
-	size_t y;
+	size_t	x;
+	size_t	y;
 
 	ft_putstr_fd("\n", 1);
 	y = 0;

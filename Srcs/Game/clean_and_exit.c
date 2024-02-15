@@ -1,10 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   clean_and_exit.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:40:53 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:47:31 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../Includes/so_long.h"
 
-int		clean_and_exit(char *message, t_so_long *game, t_graphics *img, t_map *map);
-void	free_sl_struct(t_so_long *to_free);
-void	free_map_struct(t_map *map);
-void	free_graphic_struct(t_graphics *img);
-void	free_position(t_position *to_free);
+int	exit_game(char *message, t_so_long *game)
+{
+	clean_and_exit(message, game, NULL, NULL);
+	return (0);
+}
+
+int	exit_on_window_closing(t_so_long *game)
+{
+	clean_and_exit(WINDOW_CLOSED, game, NULL, NULL);
+	return (0);
+}
 
 int	clean_and_exit(char *message, t_so_long *game, t_graphics *img, t_map *map)
 {
@@ -31,22 +49,11 @@ void	free_sl_struct(t_so_long *to_free)
 	{
 		free_images(to_free->mlx_connection, to_free->img);
 		free_position(to_free->player);
-		free_mlx_var(to_free->mlx_connection, to_free->mlx_window, to_free->mlx_clean);
+		free_mlx_var(to_free->mlx_connection, to_free->mlx_window,
+			to_free->mlx_clean);
 		free_map_struct(to_free->map);
 		free(to_free);
 		to_free = NULL;
-	}
-}
-
-void	free_map_struct(t_map *map)
-{
-	if (map != NULL)
-	{
-		free_position(map->spawn);
-		free_position(map->exit);
-		free_str_var(map->map);
-		free(map);
-		map = NULL;
 	}
 }
 
@@ -72,11 +79,4 @@ void	free_graphic_struct(t_graphics *img)
 		free(img);
 		img = NULL;
 	}
-}
-
-void	free_position(t_position *to_free)
-{
-	if (to_free != NULL)
-		free(to_free);
-	to_free = NULL;
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   so_long.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:25:22 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:38:07 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
@@ -16,7 +28,8 @@
 
 /* In Srcs/Game/clean_and_exit.c */
 
-int			clean_and_exit(char *message, t_so_long *game, t_graphics *img, t_map *map);
+int			clean_and_exit(char *message, t_so_long *game,
+				t_graphics *img, t_map *map);
 void		free_sl_struct(t_so_long *to_free);
 void		free_map_struct(t_map *map);
 void		free_graphic_struct(t_graphics *img);
@@ -34,14 +47,13 @@ void		ft_free_sl(char *str, int fd);
 int			apply_graphics(t_so_long *game);
 void		draw_map(t_so_long *game, t_position pos);
 int			put_player(t_so_long *game);
-t_graphics	*get_and_convert_images(t_so_long *game);
+t_graphics	*get_and_convert_images(t_so_long *game, t_graphics *game);
 t_graphics	*set_to_null(t_graphics *imgs);
 
 /* In Srcs/Game/handler.c */
 
 void		launch_game(t_so_long *game);
 int			keypressed_move(int key, t_so_long *game);
-// static int	update_and_check_case(t_so_long *game, int x, int y);
 int			exit_game(char *message, t_so_long *game);
 int			print_nb_moves(int nb_moves);
 
@@ -66,7 +78,8 @@ t_map		*parse_map(char *map_path);
 t_map		*init_map_struct(int fd);
 t_map		*fill_map(int fd, t_map *map);
 char		*copy_line(t_map *map, char *line, size_t y, int fd);
-size_t		store_and_check_elems_data(t_map *map, char elem, size_t x, size_t y);
+size_t		store_and_check_elems_data(t_map *map, char elem,
+				size_t x, size_t y);
 
 /* Srcs/main.c */
 

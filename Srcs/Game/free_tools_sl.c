@@ -1,9 +1,16 @@
-#include "../../Includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free_tools_sl.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:40:59 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:46:51 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-void	free_images(void *connection, t_graphics *img);
-void	free_mlx_var(void *connection, void *window, int display_or_both);
-void	free_str_var(char **to_free);
-void	ft_free_sl(char *str, int fd);
+#include "../../Includes/so_long.h"
 
 void	free_images(void *connection, t_graphics *img)
 {
@@ -44,6 +51,26 @@ void	free_mlx_var(void *connection, void *window, int display_or_both)
 		mlx_destroy_display(connection);
 		free(connection);
 		connection = NULL;
+	}
+}
+
+void	free_map_struct(t_map *map)
+{
+	if (map != NULL)
+	{
+		if (map->spawn != NULL)
+		{
+			free(map->spawn);
+			map->spawn = NULL;
+		}
+		if (map->exit != NULL)
+		{
+			free(map->exit);
+			map->exit = NULL;
+		}
+		free_str_var(map->map);
+		free(map);
+		map = NULL;
 	}
 }
 

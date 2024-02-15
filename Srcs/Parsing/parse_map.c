@@ -1,10 +1,16 @@
-#include "../../Includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:50:58 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:56:54 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_map	*parse_map(char *map_path);
-t_map	*init_map_struct(int fd);
-t_map	*fill_map(int fd, t_map *map);
-char	*copy_line(t_map *map, char *line, size_t y, int fd);
-size_t	store_and_check_elems_data(t_map *map, char elem, size_t x, size_t y);
+#include "../../Includes/so_long.h"
 
 t_map	*parse_map(char *map_path)
 {
@@ -33,11 +39,12 @@ t_map	*parse_map(char *map_path)
 
 t_map	*init_map_struct(int fd)
 {
-	t_map *map;
+	t_map	*map;
 
 	map = malloc(sizeof(t_map));
 	if (!map)
-		return(ft_free_sl(NULL, fd), clean_and_exit(ALLOC_BOUM, NULL, NULL, NULL), NULL);
+		return (ft_free_sl(NULL, fd),
+			clean_and_exit(ALLOC_BOUM, NULL, NULL, NULL), NULL);
 	map->map = NULL;
 	map->nb_collect = 0;
 	map->width = 0;
@@ -45,7 +52,8 @@ t_map	*init_map_struct(int fd)
 	map->spawn = malloc(sizeof(t_position));
 	map->exit = malloc(sizeof(t_position));
 	if (!map->exit || !map->spawn)
-		return(ft_free_sl(NULL, fd), clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
+		return (ft_free_sl(NULL, fd),
+			clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
 	map->spawn->x = -1;
 	map->exit->x = -1;
 	return (map);
@@ -72,18 +80,21 @@ t_map	*fill_map(int fd, t_map *map)
 	line = get_next_line(fd);
 	map = init_map_str(map);
 	if (map->map == NULL || line == NULL)
-		return(ft_free_sl(line, fd), clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
+		return (ft_free_sl(line, fd),
+			clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
 	y = -1;
 	while (++y < map->height)
 	{
 		map->map[y] = malloc(sizeof(char) * map->width + 1);
 		line = copy_line(map, line, y, fd);
 		if ((line == NULL && y < map->height - 1) || map->map[y] == NULL)
-			return(ft_free_sl(line, fd), clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
+			return (ft_free_sl(line, fd),
+				clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
 	}
 	map->map[y] = NULL;
 	if (map->nb_collect == 0)
-		return(ft_free_sl(line, fd), clean_and_exit(NO_COLL, NULL, NULL, map), NULL);
+		return (ft_free_sl(line, fd),
+			clean_and_exit(NO_COLL, NULL, NULL, map), NULL);
 	return (map);
 }
 
@@ -99,18 +110,20 @@ char	*copy_line(t_map *map, char *line, size_t y, int fd)
 		{
 			checker = store_and_check_elems_data(map, line[x], x, y);
 			if (checker == 2)
-				return(ft_free_sl(line, fd), clean_and_exit(TOO_MANY_P, NULL, NULL, map), NULL);
+				return (ft_free_sl(line, fd),
+					clean_and_exit(TOO_MANY_P, NULL, NULL, map), NULL);
 			if (checker == 3)
-				return (ft_free_sl(line, fd), clean_and_exit(TOO_MANY_E, NULL, NULL, map), NULL);
+				return (ft_free_sl(line, fd),
+					clean_and_exit(TOO_MANY_E, NULL, NULL, map), NULL);
 			map->map[y][x] = line[x];
 			x++;
 		}
 		map->map[y][x] = '\0';
 		free(line);
-		return(get_next_line(fd));
+		return (get_next_line(fd));
 	}
 	else
-		return(ft_free_sl(line, fd), NULL);
+		return (ft_free_sl(line, fd), NULL);
 }
 
 size_t	store_and_check_elems_data(t_map *map, char elem, size_t x, size_t y)

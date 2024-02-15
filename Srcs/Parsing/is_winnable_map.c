@@ -1,9 +1,16 @@
-#include "../../Includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_winnable_map.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:50:36 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:50:37 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-size_t	is_winnable(t_map map);
-size_t	find_valid_path(char **map, size_t y, size_t x, t_check *checker);
-char	**dup_map(t_map map);
-char	**free_map_copy(char **map, ssize_t nb_strs_to_free);
+#include "../../Includes/so_long.h"
 
 size_t	is_winnable(t_map map)
 {
@@ -27,7 +34,7 @@ size_t	is_winnable(t_map map)
 	return (TRUE);
 }
 
-int		has_a_non_checked_path(char **map, size_t y, size_t x)
+int	has_a_non_checked_path(char **map, size_t y, size_t x)
 {
 	if (map[y][x - 1] == '0')
 		return (TRUE);
@@ -53,13 +60,13 @@ size_t	find_valid_path(char **map, size_t y, size_t x, t_check *checker)
 	if (map[y][x] == EXIT)
 		checker->found_exit = TRUE;
 	map[y][x] = CHECKED;
-	if (find_valid_path(map, y, MOVE_RIGHT(x), checker) == TRUE)
+	if (find_valid_path(map, y, x + 1, checker) == TRUE)
 		return (TRUE);
-	if (find_valid_path(map, MOVE_UP(y), x, checker) == TRUE)
+	if (find_valid_path(map, y - 1, x, checker) == TRUE)
 		return (TRUE);
-	if (find_valid_path(map, y, MOVE_LEFT(x), checker) == TRUE)
+	if (find_valid_path(map, y, x - 1, checker) == TRUE)
 		return (TRUE);
-	if (find_valid_path(map, MOVE_DOWN(y), x, checker) == TRUE)
+	if (find_valid_path(map, y + 1, x, checker) == TRUE)
 		return (TRUE);
 	return (FALSE);
 }

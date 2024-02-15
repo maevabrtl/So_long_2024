@@ -1,10 +1,16 @@
-#include "../../Includes/so_long.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   is_valid_map.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/15 15:49:38 by mabertha          #+#    #+#             */
+/*   Updated: 2024/02/15 15:49:39 by mabertha         ###   ########lyon.fr   */
+/*                                                                            */
+/* ************************************************************************** */
 
-t_map	*content_is_valid(int fd, t_map *map);
-char	*check_line(int fd, t_map *map, char *line);
-size_t	is_valid_element(char elem);
-void	ends_with_ber(char *path);
-size_t	is_closed_and_rectangular(t_map *map);
+#include "../../Includes/so_long.h"
 
 t_map	*content_is_valid(int fd, t_map *map)
 {
@@ -47,9 +53,12 @@ char	*check_line(int fd, t_map *map, char *line)
 		while (is_valid_element(line[index]) == TRUE)
 			index++;
 		if (index < map->width && is_valid_element(line[index]) == FALSE)
-			return (ft_free_sl(line, fd), clean_and_exit(INVALID_ELEM, NULL, NULL, map), NULL);
-		else if (index != map->width || (index == map->width && line[index] != '\n'))
-			return (ft_free_sl(line, fd), clean_and_exit(NOT_RECT, NULL, NULL, map), NULL);
+			return (ft_free_sl(line, fd),
+				clean_and_exit(INVALID_ELEM, NULL, NULL, map), NULL);
+		else if (index != map->width
+			|| (index == map->width && line[index] != '\n'))
+			return (ft_free_sl(line, fd),
+				clean_and_exit(NOT_RECT, NULL, NULL, map), NULL);
 	}
 	free(line);
 }
@@ -69,7 +78,7 @@ void	ends_with_ber(char *path)
 
 	len = ft_strlen(path);
 	if (path[len - 1] == 'r' && path[len - 2] == 'e'
-		&& path[len - 3] == 'b' && path[len - 4 ] == '.')
+		&& path[len - 3] == 'b' && path[len - 4] == '.')
 		return ;
 	clean_and_exit(NOT_BER, NULL, NULL, NULL);
 }
