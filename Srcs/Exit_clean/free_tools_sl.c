@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:40:59 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:46:51 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 23:01:09 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,14 @@ void	free_images(void *connection, t_graphics *img)
 
 void	free_mlx_var(void *connection, void *window, int display_or_both)
 {
-	if (display_or_both == 1)
+	if (connection != NULL && display_or_both == 1)
 	{
 		mlx_destroy_display(connection);
 		free(connection);
 		connection = NULL;
 		return ;
 	}
-	else
+	else if (connection != NULL && window != NULL && display_or_both == 2)
 	{
 		mlx_destroy_window(connection, window);
 		mlx_destroy_display(connection);
@@ -68,30 +68,24 @@ void	free_map_struct(t_map *map)
 			free(map->exit);
 			map->exit = NULL;
 		}
-		free_str_var(map->map);
+		free_str_var(map->map, map->height);
 		free(map);
 		map = NULL;
 	}
 }
 
-void	free_str_var(char **to_free)
+void	free_str_var(char **to_free, int nb_to_free)
 {
 	int		i;
 
 	i = 0;
 	if (to_free != NULL)
 	{
-		if (to_free[i] != NULL)
+		while (i < nb_to_free)
 		{
-			while (to_free[i] != NULL)
-			{
-				free(to_free[i]);
-				to_free[i] = NULL;
-				i++;
-			}
-			if (to_free[i])
-				free(to_free[i]);
+			free(to_free[i]);
 			to_free[i] = NULL;
+			i++;
 		}
 		free(to_free);
 		to_free = NULL;

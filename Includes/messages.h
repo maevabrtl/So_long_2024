@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:57:00 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 14:57:43 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 19:24:24 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ MLX failed to convert xpm files to images.\n"
 MLX failed to launch graphical window.\n"
 
 # define WINDOW_CLOSED "\
+\n\
 Game window has been closed. So long !\n"
 
 /* MAP */

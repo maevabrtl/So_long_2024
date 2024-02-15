@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:58:36 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:02:24 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 21:43:18 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 
 # define CLOSING_WINDOW 17
 # define NO_MASK 0
+
+# define XPM_IMG mlx_xpm_file_to_image
 
 # define W_KEY 119
 # define S_KEY 115

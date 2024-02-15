@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:50:36 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:50:37 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 23:31:01 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,6 @@ size_t	is_winnable(t_map map)
 	}
 	free_map_copy(map_copy, map.height);
 	return (TRUE);
-}
-
-int	has_a_non_checked_path(char **map, size_t y, size_t x)
-{
-	if (map[y][x - 1] == '0')
-		return (TRUE);
-	if (map[y][x + 1] == '0')
-		return (TRUE);
-	if (map[y - 1][x] == '0')
-		return (TRUE);
-	if (map[y + 1][x] == '0')
-		return (TRUE);
-	return (FALSE);
 }
 
 size_t	find_valid_path(char **map, size_t y, size_t x, t_check *checker)

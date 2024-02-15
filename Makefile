@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re os libs me a sandwich tests
+.PHONY: all clean fclean re os libs me a sandwich tests FORCE
 
 include Includes/Libft/text_mod.mk
 
@@ -12,12 +12,10 @@ include Includes/Libft/text_mod.mk
 
 NAME := so_long
 CC := cc
-MANDATORY_FLAGS := -Wall -Wextra -g3
+MANDATORY_FLAGS := -Wall -Wextra -Werror -g3
 DEPS_FLAGS := -MMD -MP
 MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L ./minilibx-linux -Imlx_linux -lmlx -lXext -lX11
 MLX_A := minilibx-linux/libmlx.a
-# -Werror # -WGAME ?????????
-# MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
 
 #******************************************************************************#
 #                                OS Checking                                   #
@@ -42,6 +40,8 @@ PATH_PARSING = $(addprefix $(PATH_SRCS), Parsing/)
 PATH_PARSING_OBJS = $(addprefix $(PATH_OBJS), Parsing/)
 PATH_GAME = $(addprefix $(PATH_SRCS), Game/)
 PATH_GAME_OBJS = $(addprefix $(PATH_OBJS), Game/)
+PATH_EXIT_CLEAN = $(addprefix $(PATH_SRCS), Exit_clean/)
+PATH_EXIT_CLEAN_OBJS = $(addprefix $(PATH_OBJS), Exit_clean/)
 
 #******************************************************************************#
 #                                  Includes                                    #
@@ -72,18 +72,26 @@ PARSING_OBJS = $(addprefix $(PATH_PARSING_OBJS), $(addsuffix .o , $(FILES_PARSIN
 #                                     Game                                     #
 #******************************************************************************#
 
-FILES_GAME = clean_and_exit graphics handler free_tools_sl
+FILES_GAME = graphics handler init_tools
 GAME_SRCS = $(addprefix $(PATH_GAME), $(addsuffix .c , $(FILES_GAME)))
 GAME_OBJS = $(addprefix $(PATH_GAME_OBJS), $(addsuffix .o , $(FILES_GAME)))
+
+#******************************************************************************#
+#                                  Exit_clean                                  #
+#******************************************************************************#
+
+FILES_EXIT_CLEAN = clean_and_exit free_tools_sl
+EXIT_CLEAN_SRCS = $(addprefix $(PATH_EXIT_CLEAN), $(addsuffix .c , $(FILES_EXIT_CLEAN)))
+EXIT_CLEAN_OBJS = $(addprefix $(PATH_EXIT_CLEAN_OBJS), $(addsuffix .o , $(FILES_EXIT_CLEAN)))
 
 #******************************************************************************#
 #                              Sources + Objects                               #
 #******************************************************************************#
 
-ALL_OBJS_PATH = $(PATH_OBJS) $(PATH_PARSING_OBJS) $(PATH_GAME_OBJS)
-OBJS = $(MAIN_OBJ) $(PARSING_OBJS) $(GAME_OBJS)
-ALL_SRCS_PATH = $(PATH_SRCS) $(PATH_PARSING) $(PATH_GAME)
-SRCS = $(MAIN_SRC) $(PARSING_SRCS) $(GAME_SRCS)
+ALL_OBJS_PATH = $(PATH_OBJS) $(PATH_PARSING_OBJS) $(PATH_GAME_OBJS) $(PATH_EXIT_CLEAN_OBJS)
+OBJS = $(MAIN_OBJ) $(PARSING_OBJS) $(GAME_OBJS) $(EXIT_CLEAN_OBJS)
+ALL_SRCS_PATH = $(PATH_SRCS) $(PATH_PARSING) $(PATH_GAME) $(PATH_EXIT_CLEAN)
+SRCS = $(MAIN_SRC) $(PARSING_SRCS) $(GAME_SRCS) $(EXIT_CLEAN_SRCS)
 
 #******************************************************************************#
 #                              Text modification                               #
@@ -114,9 +122,14 @@ re: re_mess fclean all
 
 libs:
 	@echo "> $(TEXT_MOD_5)Making libs$(RESET)"
+	@echo ""
 	@make --no-print-directory -C $(PATH_LIBFT)
-	@echo "$(TEXT_MOD_1)Libraries ready for use ! 🚀 $(RESET)\n"
+	@echo "\033[A\033[K"
+	@echo ""
 	@make -s --no-print-directory -C $(MLX_DIR)
+	@echo "\033[A\033[K"
+	@echo "$(TEXT_MOD_1)Libraries ready for use ! 🚀 $(RESET)\n"
+
 
 #*****************************************************************************#
 #                               Cleaning rules                                #
@@ -161,20 +174,18 @@ end_compil:
 #                             Compilation rules                               #
 #*****************************************************************************#
 
-$(NAME): $(ALL_OBJS_PATH) $(OBJS) # $(INCS) $(LIBFT) $(MLX_A)
+$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT) Makefile
 	@$(CC) $(OBJS) $(LIBFT) $(MLX_LINUX_FLAGS) -o $@
 	@echo "> $(TEXT_MOD_5)Compilation succeeded !$(RESET)"
 
 $(ALL_OBJS_PATH):
 	@mkdir $@
 
-$(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) Makefile
+$(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) $(LIBFT) Makefile
 	@printf %b "  $(TEXT_MOD_3)Compiling$(RESET) $(TEXT_MOD_4)$<...$(RESET)"
-	@$(CC) -c $(MANDATORY_FLAGS) $< -o $@ $(MLX_LINUX_FLAGS)
+	@$(CC) -c $(MANDATORY_FLAGS) $< -o $@
 	@printf "\r"
 	@printf "                                                                                     \r"
-
-#	@$(CC) $(LIBFT) -o $@ $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(OS_MLX) -c $< -I $(PATH_INC)
 
 -include $(OBJS:.o=.d)
 

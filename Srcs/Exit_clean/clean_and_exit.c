@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:40:53 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:47:31 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 22:59:30 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,11 @@ void	free_sl_struct(t_so_long *to_free)
 	if (to_free != NULL)
 	{
 		free_images(to_free->mlx_connection, to_free->img);
-		free_position(to_free->player);
+		if (to_free->player != NULL)
+		{
+			free(to_free->player);
+			to_free->player = NULL;
+		}
 		free_mlx_var(to_free->mlx_connection, to_free->mlx_window,
 			to_free->mlx_clean);
 		free_map_struct(to_free->map);

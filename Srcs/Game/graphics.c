@@ -6,17 +6,11 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:41:04 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:41:05 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 22:45:39 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/so_long.h"
-
-int			apply_graphics(t_so_long *game);
-void		draw_map(t_so_long *game, t_position pos);
-int			put_player(t_so_long *game);
-t_graphics	*get_and_convert_images(t_so_long *game, t_graphics *xpm);
-t_graphics	*set_to_null(t_graphics *img);
 
 int	apply_graphics(t_so_long *game)
 {
@@ -70,48 +64,27 @@ int	put_player(t_so_long *game)
 	return (0);
 }
 
-t_graphics	*set_xpm(void)
-{
-	t_graphics	*xpm;
-
-	xpm = malloc(sizeof(t_graphics));
-	if (xpm == NULL)
-		return (NULL);
-	xpm->wall = ft_strdup(WALL_XPM);
-	xpm->floor = ft_strdup(FLOOR_XPM);
-	xpm->collect = ft_strdup(COLLECT_XPM);
-	xpm->exit = ft_strdup(EXIT_XPM);
-	xpm->player = ft_strdup(PLAYER_XPM);
-	if (xpm->wall == NULL || xpm->floor == NULL
-		|| xpm->collect == NULL || xpm->exit == NULL
-		|| !xpm->player)
-		return (NULL);
-	return (xpm);
-}
-
 t_graphics	*get_and_convert_images(t_so_long *game, t_graphics	*xpm)
 {
-	xpm = set_xpm();
-	if (!xpm)
-		clean_and_exit(ALLOC_BOUM, game, xpm, NULL);
-	game->img->wall = mlx_xpm_file_to_image(game->mlx_connection,
-			xpm->wall, NULL, NULL);
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
+	xpm = set_xpm(game);
+	game->img->wall = XPM_IMG(game->mlx_connection, xpm->wall, &x, &y);
 	if (game->img->wall == NULL)
 		clean_and_exit(XPM_CONVERSION_FAIL, game, xpm, NULL);
-	game->img->floor = mlx_xpm_file_to_image(game->mlx_connection,
-			xpm->floor, NULL, NULL);
+	game->img->floor = XPM_IMG(game->mlx_connection, xpm->floor, &x, &y);
 	if (game->img->floor == NULL)
 		clean_and_exit(XPM_CONVERSION_FAIL, game, xpm, NULL);
-	game->img->exit = mlx_xpm_file_to_image(game->mlx_connection,
-			xpm->exit, NULL, NULL);
+	game->img->exit = XPM_IMG(game->mlx_connection, xpm->exit, &x, &y);
 	if (game->img->exit == NULL)
 		clean_and_exit(XPM_CONVERSION_FAIL, game, xpm, NULL);
-	game->img->player = mlx_xpm_file_to_image(game->mlx_connection,
-			xpm->player, NULL, NULL);
+	game->img->player = XPM_IMG(game->mlx_connection, xpm->player, &x, &y);
 	if (game->img->player == NULL)
 		clean_and_exit(XPM_CONVERSION_FAIL, game, xpm, NULL);
-	game->img->collect = mlx_xpm_file_to_image(game->mlx_connection,
-			xpm->collect, NULL, NULL);
+	game->img->collect = XPM_IMG(game->mlx_connection, xpm->collect, &x, &y);
 	if (game->img->collect == NULL)
 		clean_and_exit(XPM_CONVERSION_FAIL, game, xpm, NULL);
 	return (free_graphic_struct(xpm), game->img);

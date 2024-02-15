@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:49:38 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:49:39 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 23:25:35 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_map	*content_is_valid(int fd, t_map *map)
 	if (index != map->width)
 		clean_and_exit(NOT_RECT, NULL, NULL, map);
 	check_line(fd, map, line);
+	close(fd);
 	return (map);
 }
 
@@ -41,26 +42,27 @@ char	*check_line(int fd, t_map *map, char *line)
 {
 	size_t	index;
 
-	index = 0;
-	map->height = 0;
 	while (line)
 	{
 		map->height++;
-		free(line);
+		ft_free_sl(line, 0);
 		line = get_next_line(fd);
 		if (!line)
-			return (NULL);
+			return (ft_free_sl(line, fd),
+				clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
+		index = 0;
 		while (is_valid_element(line[index]) == TRUE)
 			index++;
 		if (index < map->width && is_valid_element(line[index]) == FALSE)
 			return (ft_free_sl(line, fd),
 				clean_and_exit(INVALID_ELEM, NULL, NULL, map), NULL);
 		else if (index != map->width
-			|| (index == map->width && line[index] != '\n'))
+			|| (index == map->width && (line[index] != '\n'
+					&& line[index] != '\0')))
 			return (ft_free_sl(line, fd),
 				clean_and_exit(NOT_RECT, NULL, NULL, map), NULL);
 	}
-	free(line);
+	return (free(line), NULL);
 }
 
 size_t	is_valid_element(char elem)

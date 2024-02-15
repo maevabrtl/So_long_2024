@@ -6,17 +6,11 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:41:11 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 15:47:24 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/15 20:38:45 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/so_long.h"
-
-void		launch_game(t_so_long *game);
-int			keypressed_move(int key, t_so_long *game);
-static int	update_and_check_case(t_so_long *game, int x, int y);
-int			exit_game(char *message, t_so_long *game);
-int			print_nb_moves(int nb_moves);
 
 void	launch_game(t_so_long *game)
 {
@@ -31,31 +25,6 @@ void	launch_game(t_so_long *game)
 	mlx_hook(game->mlx_window, CLOSING_WINDOW, NO_MASK,
 		exit_on_window_closing, game);
 	mlx_loop(game->mlx_connection);
-}
-
-int	keypressed_move(int key, t_so_long *game)
-{
-	mlx_put_image_to_window(game->mlx_connection, game->mlx_window,
-		game->img->floor, (game->player->x * 70), (game->player->y * 70));
-	if (key == W_KEY)
-		if (update_and_check_case(game, game->player->x,
-				game->player->y - 1) == TRUE)
-			game->player->y = game->player->y - 1;
-	if (key == S_KEY)
-		if (update_and_check_case(game, game->player->x,
-				game->player->y + 1) == TRUE)
-			game->player->y = game->player->y + 1;
-	if (key == A_KEY)
-		if (update_and_check_case(game, game->player->x - 1,
-				game->player->y) == TRUE)
-			game->player->x = game->player->x - 1;
-	if (key == D_KEY)
-		if (update_and_check_case(game, game->player->x + 1,
-				game->player->y) == TRUE)
-			game->player->x = game->player->x + 1;
-	if (key == CLOSE_KEY)
-		exit_game(WINDOW_CLOSED, game);
-	return (key);
 }
 
 static int	update_and_check_case(t_so_long *game, int x, int y)
@@ -81,6 +50,31 @@ static int	update_and_check_case(t_so_long *game, int x, int y)
 		return (TRUE);
 	}
 	return (FALSE);
+}
+
+int	keypressed_move(int key, t_so_long *game)
+{
+	mlx_put_image_to_window(game->mlx_connection, game->mlx_window,
+		game->img->floor, (game->player->x * 70), (game->player->y * 70));
+	if (key == W_KEY)
+		if (update_and_check_case(game, game->player->x,
+				game->player->y - 1) == TRUE)
+			game->player->y = game->player->y - 1;
+	if (key == S_KEY)
+		if (update_and_check_case(game, game->player->x,
+				game->player->y + 1) == TRUE)
+			game->player->y = game->player->y + 1;
+	if (key == A_KEY)
+		if (update_and_check_case(game, game->player->x - 1,
+				game->player->y) == TRUE)
+			game->player->x = game->player->x - 1;
+	if (key == D_KEY)
+		if (update_and_check_case(game, game->player->x + 1,
+				game->player->y) == TRUE)
+			game->player->x = game->player->x + 1;
+	if (key == CLOSE_KEY)
+		exit_game(WINDOW_CLOSED, game);
+	return (key);
 }
 
 int	print_nb_moves(int nb_moves)
