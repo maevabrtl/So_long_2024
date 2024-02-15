@@ -9,7 +9,7 @@
        _.-'    _./^\\  `        ``<._     ``.' _ `.\n\
    _.-' _..--.` -   {                       `/  ) ;\n\
   (_..-'    ( C  _   `\\...__                ;  (,'\n\
-             `-._,_,*--'    ``--...____..-'\n"
+             `-._,_,*--'    ``--...____..-'\n\n"
 
 /* BASICS */
 
@@ -40,7 +40,7 @@ MLX failed to convert xpm files to images.\n"
 MLX failed to launch graphical window.\n"
 
 # define WINDOW_CLOSED "\
-Game window has been closed. So long !"
+Game window has been closed. So long !\n"
 
 
 /* MAP */

@@ -66,7 +66,6 @@ static int	update_and_check_case(t_so_long *game, int x, int y)
 
 int	exit_game(char *message, t_so_long *game)
 {
-	// game->win_or_not = TRUE;
 	clean_and_exit(message, game, NULL, NULL);
 	return (0);
 }

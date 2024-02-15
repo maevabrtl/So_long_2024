@@ -11,11 +11,13 @@ int	clean_and_exit(char *message, t_so_long *game, t_graphics *img, t_map *map)
 	int	output_fd;
 
 	output_fd = 2;
-	if (game != NULL && game->win_or_not == TRUE)
+	if (*message == '\n')
 		output_fd = 1;
 	free_map_struct(map);
 	free_graphic_struct(img);
 	free_sl_struct(game);
+	if (output_fd == 2)
+		ft_putstr_fd("Error.\n> ", output_fd);
 	ft_putstr_fd(message, output_fd);
 	if (output_fd == 1)
 		exit(EXIT_SUCCESS);

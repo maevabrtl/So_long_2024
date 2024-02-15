@@ -48,7 +48,6 @@ typedef struct		s_so_long
 	void				*mlx_connection;
 	void				*mlx_window;
 	int					mlx_clean;
-	int					win_or_not;
 }					t_so_long;
 
 #endif

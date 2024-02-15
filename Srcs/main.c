@@ -33,7 +33,6 @@ t_so_long	*init_struct_game(t_so_long *game, t_map *map)
 	if (game->player == NULL)
 		clean_and_exit(ALLOC_BOUM, NULL, NULL, map);
 	game->map = map;
-	game->win_or_not = FALSE;
 	game->mlx_clean = 1;
 	game->mlx_window = NULL;
 	game->img = NULL;
