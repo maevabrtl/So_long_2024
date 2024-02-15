@@ -39,7 +39,12 @@ void	free_mlx_var(void *connection, void *window, int display_or_both)
 		return ;
 	}
 	else
+	{
 		mlx_destroy_window(connection, window);
+		mlx_destroy_display(connection);
+		free(connection);
+		connection = NULL;
+	}
 }
 
 void	free_str_var(char **to_free)

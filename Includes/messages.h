@@ -62,7 +62,7 @@ But, what's a game without a player ?\
 
 # define NO_COLL "\
 The map must contain at least one \
-collectible ('C').\n"
+collectible ('C'). Cats are hungry buddy !\n"
 
 # define TOO_MANY_E "\
 Only one exit ('E') is allowed. \
@@ -92,5 +92,9 @@ end with .ber\n"
 # define EMPTY_MAP "\
 Get_next_line() returned and empty line, \
 something's weird in your map file !\n"
+
+# define MAP_OVERSIZE "\
+Map is bigger than screen, please put a smaller\
+ map you glutton !\n"
 
 #endif

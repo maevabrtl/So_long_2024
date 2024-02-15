@@ -21,6 +21,19 @@ int	main(int ac, char **av)
 	return (0);
 }
 
+int	check_size(void	*connection, t_map *map)
+{
+	size_t	y;
+	size_t	x;
+
+	x = 0;
+	y = 0;
+	mlx_get_screen_size(connection, (int *)(&x), (int *)(&y));
+	if ((map->height * 70) > y || (map->width * 70) > x)
+		return (FALSE);
+	return (TRUE);
+}
+
 t_so_long	*init_struct_game(t_so_long *game, t_map *map)
 {
 	game = malloc(sizeof(t_so_long));
@@ -36,6 +49,8 @@ t_so_long	*init_struct_game(t_so_long *game, t_map *map)
 	game->mlx_clean = 1;
 	game->mlx_window = NULL;
 	game->img = NULL;
+	if (check_size(game->mlx_connection, game->map) == FALSE)
+		clean_and_exit(MAP_OVERSIZE, game, NULL, NULL);
 	return (game);
 }
 

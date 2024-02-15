@@ -42,7 +42,6 @@ void	free_map_struct(t_map *map)
 {
 	if (map != NULL)
 	{
-		if (map->spawn)
 		free_position(map->spawn);
 		free_position(map->exit);
 		free_str_var(map->map);
