@@ -35,17 +35,19 @@ typedef struct		s_map
 	size_t				width;
 	size_t				height;
 	size_t				nb_collect;
-	t_position			spawn;
-	t_position			exit;
+	t_position			*spawn;
+	t_position			*exit;
 	char				**map;
 }					t_map;
 
 typedef struct		s_so_long
 {
-	t_map				map;
-	t_mlx				mlx;
-	t_graphics			img;
-	t_position			player;
+	t_map				*map;
+	t_graphics			*img;
+	t_position			*player;
+	void				*mlx_connection;
+	void				*mlx_window;
+	int					mlx_clean;
 	int					win_or_not;
 }					t_so_long;
 

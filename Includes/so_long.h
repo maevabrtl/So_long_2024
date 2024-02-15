@@ -1,10 +1,10 @@
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+# include "../minilibx-linux/mlx.h"
 # include "macros.h"
 # include "structs.h"
 # include "messages.h"
-# include <../mlx/mlx.h>
 # include "Libft/Includes/libft.h"
 # include "Libft/Includes/get_next_line.h"
 # include <stdio.h>
@@ -16,19 +16,26 @@
 
 /* In Srcs/Game/clean_and_exit.c */
 
-int			clean_and_exit(char *message, t_so_long *struct_var, char *vars_to_free_list, ...);
-int			free_str_var(char **to_free, char alloc_ptr, int index);
-void		free_images(t_so_long *game);
-int			free_mlx_var(t_mlx to_clean, char display_or_both, int index);
-void		free_struct(t_so_long *to_free);
+int			clean_and_exit(char *message, t_so_long *game, t_graphics *img, t_map *map);
+void		free_sl_struct(t_so_long *to_free);
+void		free_map_struct(t_map *map);
+void		free_graphic_struct(t_graphics *img);
+void		free_position(t_position *to_free);
+
+/* In Srcs/Game/free_tools_sl.c */
+
+void		free_images(void *connection, t_graphics *img);
+void		free_mlx_var(void *connection, void *window, int display_or_both);
+void		free_str_var(char **to_free);
+void		ft_free_sl(char *str, int fd);
 
 /* In Srcs/Game/graphics.c */
 
 int			apply_graphics(t_so_long *game);
 void		draw_map(t_so_long *game, t_position pos);
 int			put_player(t_so_long *game);
-t_graphics	get_and_convert_images(t_so_long *game);
-t_graphics	set_to_null(t_graphics imgs);
+t_graphics	*get_and_convert_images(t_so_long *game);
+t_graphics	*set_to_null(t_graphics *imgs);
 
 /* In Srcs/Game/handler.c */
 
@@ -40,11 +47,11 @@ int			print_nb_moves(int nb_moves);
 
 /* In Srcs/Parsing/is_valid_map.c */
 
-t_map		content_is_valid(int fd, t_map map);
-char		*check_line(int fd, t_map *map);
+t_map		*content_is_valid(int fd, t_map *map);
+char		*check_line(int fd, t_map *map, char *line);
 size_t		is_valid_element(char elem);
 void		ends_with_ber(char *path);
-size_t		is_closed_and_rectangular(t_map map);
+size_t		is_closed_and_rectangular(t_map *map);
 
 /* In Srcs/Parsing/is_winnable_map.c */
 
@@ -55,15 +62,16 @@ char		**free_map_copy(char **map, ssize_t nb_strs_to_free);
 
 /* In Srcs/Parsing/parse_map.c */
 
-t_map		parse_map(char *map_path);
-t_map		init_map_struct(void);
-t_map		fill_map(int fd, t_map map);
-size_t		copy_line(t_map *map, char *line, size_t y, int fd);
+t_map		*parse_map(char *map_path);
+t_map		*init_map_struct(int fd);
+t_map		*fill_map(int fd, t_map *map);
+char		*copy_line(t_map *map, char *line, size_t y, int fd);
 size_t		store_and_check_elems_data(t_map *map, char elem, size_t x, size_t y);
 
 /* Srcs/main.c */
 
 int			main(int ac, char **av);
 void		print_map(t_map map);
+t_so_long	*init_struct_game(t_so_long *game, t_map *map);
 
 #endif

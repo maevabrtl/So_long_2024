@@ -14,8 +14,8 @@ size_t	is_winnable(t_map map)
 	map_copy = dup_map(map);
 	if (map_copy == NULL)
 		return (FALSE);
-	player.x = map.spawn.x;
-	player.y = map.spawn.y;
+	player.x = map.spawn->x;
+	player.y = map.spawn->y;
 	checker.nb_collect = map.nb_collect;
 	checker.found_exit = FALSE;
 	if (find_valid_path(map_copy, player.y, player.x, &checker) == FALSE)

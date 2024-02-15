@@ -25,13 +25,10 @@
 # define MOVE_UP(y) ((y) - 1)
 # define MOVE_DOWN(y) ((y) + 1)
 
-# define TILE_SIZE 60
-# define SPRITE_SIZE 32
-
-# define FLOOR_XPM "../Ressources/XPM_imgs/F_bricks_path_60.xpm"
-# define WALL_XPM "../Ressources/XPM_imgs/W_bush_texture_60.xpm"
-# define PLAYER_XPM "../Ressources/XPM_imgs/P_Cat_32.xpm"
-# define COLLECT_XPM "../Ressources/XPM_imgs/C_Pig_32.xpm"
-# define EXIT_XPM "../Ressources/XPM_imgs/E_bed_32.xpm"
+# define FLOOR_XPM "Ressources/XPM_imgs/floor.xpm"
+# define WALL_XPM "Ressources/XPM_imgs/wall.xpm"
+# define PLAYER_XPM "Ressources/XPM_imgs/player.xpm"
+# define COLLECT_XPM "Ressources/XPM_imgs/collectible.xpm"
+# define EXIT_XPM "Ressources/XPM_imgs/exit.xpm"
 
 #endif

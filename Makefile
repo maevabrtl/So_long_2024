@@ -11,14 +11,13 @@ include Includes/Libft/text_mod.mk
 #******************************************************************************#
 
 NAME := so_long
-# MLX_A := ./mlx/libmlx_Darwin.a
 CC := cc
-MANDATORY_FLAGS := -Wall -Wextra # -Werror # -WGAME ?????????
+MANDATORY_FLAGS := -Wall -Wextra -g3
 DEPS_FLAGS := -MMD -MP
-CC_FLAGS := -fsanitize=address -g3
-# MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext
-MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
-MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz mlx_linux/libmlx_Linux.a mlx_linux/libmlx.a
+MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L ./minilibx-linux -Imlx_linux -lmlx -lXext -lX11
+MLX_A := minilibx-linux/libmlx.a
+# -Werror # -WGAME ?????????
+# MLX_MACOS_FLAGS := -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext -framework OpenGL -framework AppKit
 
 #******************************************************************************#
 #                                OS Checking                                   #
@@ -28,11 +27,9 @@ OS = $(shell uname)
 ifeq ($(OS), Linux)
 	ALL_FLAGS := $(MANDATORY_FLAGS) $(DEPS_FLAGS)
 	OS_MLX := $(MLX_LINUX_FLAGS)
-	MLX_DIR := ./mlx_linux/
-else
-	ALL_FLAGS := $(MANDATORY_FLAGS) $(CC_FLAGS)
-	OS_MLX := $(MLX_MACOS_FLAGS)
+	MLX_DIR := minilibx-linux
 endif
+
 
 #******************************************************************************#
 #                                   Paths                                      #
@@ -75,7 +72,7 @@ PARSING_OBJS = $(addprefix $(PATH_PARSING_OBJS), $(addsuffix .o , $(FILES_PARSIN
 #                                     Game                                     #
 #******************************************************************************#
 
-FILES_GAME = clean_and_exit graphics handler
+FILES_GAME = clean_and_exit graphics handler free_tools_sl
 GAME_SRCS = $(addprefix $(PATH_GAME), $(addsuffix .c , $(FILES_GAME)))
 GAME_OBJS = $(addprefix $(PATH_GAME_OBJS), $(addsuffix .o , $(FILES_GAME)))
 
@@ -119,9 +116,7 @@ libs:
 	@echo "> $(TEXT_MOD_5)Making libs$(RESET)"
 	@make --no-print-directory -C $(PATH_LIBFT)
 	@echo "$(TEXT_MOD_1)Libraries ready for use ! 🚀 $(RESET)\n"
-ifdef MLX_DIR
 	@make -s --no-print-directory -C $(MLX_DIR)
-endif
 
 #*****************************************************************************#
 #                               Cleaning rules                                #
@@ -134,6 +129,7 @@ clean:
 
 fclean: clean
 	@make --no-print-directory fclean -C $(PATH_LIBFT)
+	@make -s --no-print-directory clean -C $(MLX_DIR)
 	@rm -f $(NAME)
 	@echo "> $(TEXT_MOD_5)Executable$(RESET) $(TEXT_MOD_6)so_long\
 	$(RESET) $(TEXT_MOD_5)deleted.$(RESET)"
@@ -165,19 +161,20 @@ end_compil:
 #                             Compilation rules                               #
 #*****************************************************************************#
 
-
-$(NAME): $(ALL_OBJS_PATH) $(OBJS) $(INCS) $(LIBFT)# $(MLX_A)
-	@$(CC) $(CC_FLAGS) $(LIBFT) $(OBJS) -o $@
+$(NAME): $(ALL_OBJS_PATH) $(OBJS) # $(INCS) $(LIBFT) $(MLX_A)
+	@$(CC) $(OBJS) $(LIBFT) $(MLX_LINUX_FLAGS) -o $@
 	@echo "> $(TEXT_MOD_5)Compilation succeeded !$(RESET)"
 
 $(ALL_OBJS_PATH):
 	@mkdir $@
 
-$(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) $(LIBFT)
+$(PATH_OBJS)%.o: $(PATH_SRCS)%.c $(INCS) Makefile
 	@printf %b "  $(TEXT_MOD_3)Compiling$(RESET) $(TEXT_MOD_4)$<...$(RESET)"
-	@$(CC) $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) -I $(PATH_INC) -o $@ -c $<
+	@$(CC) -c $(MANDATORY_FLAGS) $< -o $@ $(MLX_LINUX_FLAGS)
 	@printf "\r"
 	@printf "                                                                                     \r"
+
+#	@$(CC) $(LIBFT) -o $@ $(MANDATORY_FLAGS) $(CC_FLAGS) $(DEPS_FLAGS) $(OS_MLX) -c $< -I $(PATH_INC)
 
 -include $(OBJS:.o=.d)
 
