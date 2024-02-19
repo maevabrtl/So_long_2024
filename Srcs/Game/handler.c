@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:41:11 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 20:38:45 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/16 02:03:08 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ static int	update_and_check_case(t_so_long *game, int x, int y)
 			exit_game(WIN, game);
 		}
 	}
-	if (game->map->map[y][x] == FLOOR || game->map->map[y][x] == PLAYER)
+	if (game->map->map[y][x] == FLOOR || game->map->map[y][x] == PLAYER
+		|| game->map->map[y][x] == EXIT)
 	{
 		nb_moves = print_nb_moves(nb_moves + 1);
 		return (TRUE);
@@ -56,6 +57,8 @@ int	keypressed_move(int key, t_so_long *game)
 {
 	mlx_put_image_to_window(game->mlx_connection, game->mlx_window,
 		game->img->floor, (game->player->x * 70), (game->player->y * 70));
+	mlx_put_image_to_window(game->mlx_connection, game->mlx_window,
+		game->img->exit, (game->map->exit->x * 70), (game->map->exit->y * 70));
 	if (key == W_KEY)
 		if (update_and_check_case(game, game->player->x,
 				game->player->y - 1) == TRUE)
@@ -79,6 +82,7 @@ int	keypressed_move(int key, t_so_long *game)
 
 int	print_nb_moves(int nb_moves)
 {
+	ft_putstr_fd("\033[A\033[K", 1);
 	if (nb_moves == 1)
 		ft_putstr_fd("1st move !\n", 1);
 	else if (nb_moves == 2)

@@ -6,14 +6,12 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 14:55:34 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 14:56:31 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/19 22:24:08 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
-
-# include <stdlib.h>
 
 typedef struct s_check
 {

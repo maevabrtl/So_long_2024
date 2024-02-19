@@ -6,7 +6,7 @@
 /*   By: mabertha <mabertha@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:49:38 by mabertha          #+#    #+#             */
-/*   Updated: 2024/02/15 23:25:35 by mabertha         ###   ########lyon.fr   */
+/*   Updated: 2024/02/16 01:15:44 by mabertha         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ char	*check_line(int fd, t_map *map, char *line)
 		ft_free_sl(line, 0);
 		line = get_next_line(fd);
 		if (!line)
-			return (ft_free_sl(line, fd),
-				clean_and_exit(ALLOC_BOUM, NULL, NULL, map), NULL);
+			return (ft_free_sl(line, fd), NULL);
 		index = 0;
 		while (is_valid_element(line[index]) == TRUE)
 			index++;

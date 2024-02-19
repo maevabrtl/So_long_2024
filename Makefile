@@ -14,7 +14,7 @@ NAME := so_long
 CC := cc
 MANDATORY_FLAGS := -Wall -Wextra -Werror -g3
 DEPS_FLAGS := -MMD -MP
-MLX_LINUX_FLAGS := -Lmlx_linux -lmlx_Linux -L ./minilibx-linux -Imlx_linux -lmlx -lXext -lX11
+MLX_LINUX_FLAGS := -L ./minilibx-linux -lmlx -lXext -lX11
 MLX_A := minilibx-linux/libmlx.a
 
 #******************************************************************************#
